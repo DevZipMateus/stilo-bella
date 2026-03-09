@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://stilobella.com.br/sitemap.xml
