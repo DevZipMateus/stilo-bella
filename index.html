@@ -1239,6 +1239,20 @@
       letter-spacing: 0.1em;
     }
 
+    /* ===== VITRINE INLINE ===== */
+    .vitrine-inline {
+      width: 100%;
+      border: 1px solid rgba(196,146,42,0.18);
+    }
+
+    #vitrine-iframe {
+      height: 2600px; /* fallback inicial largo */
+    }
+
+    @media (max-width: 768px) {
+      #vitrine-iframe { height: 3200px; }
+    }
+
     /* ===== EFEITOS ===== */
 
     /* Partículas canvas no hero */
@@ -1723,6 +1737,18 @@
         </div>
 
       </div>
+
+      <!-- Vitrine integrada -->
+      <div class="vitrine-inline reveal" style="margin-top:48px;">
+        <iframe
+          id="vitrine-iframe"
+          src="https://stilobella.egestor.com.br/vitrine/"
+          title="Vitrine Stilo Bella"
+          scrolling="no"
+          style="width:100%; border:none; display:block;"
+        ></iframe>
+      </div>
+
     </div>
   </section>
 
@@ -2133,6 +2159,25 @@
       });
     }, { rootMargin: '-40% 0px -55% 0px' });
     sections.forEach(s => spyObs.observe(s));
+
+    // ===== VITRINE AUTO-ALTURA =====
+    (function() {
+      const iframe = document.getElementById('vitrine-iframe');
+      if (!iframe) return;
+      // Tenta receber altura via postMessage (se o site suportar)
+      window.addEventListener('message', function(e) {
+        if (e.data && e.data.height && e.origin.includes('egestor')) {
+          iframe.style.height = e.data.height + 'px';
+        }
+      });
+      // Fallback: ajusta altura após carregamento
+      iframe.addEventListener('load', function() {
+        try {
+          const h = this.contentWindow.document.body.scrollHeight;
+          if (h > 100) this.style.height = h + 'px';
+        } catch(e) { /* cross-origin: mantém fallback */ }
+      });
+    })();
 
     // ===== PARTÍCULAS HERO =====
     (function() {

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demonstração de Vitrine — Stilo Bella</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:      #0A0A0A;
+      --dark:       #111111;
+      --gold:       #C4922A;
+      --gold-light: #D4AA5A;
+      --gold-shine: #E8C97A;
+      --white:      #FFFFFF;
+      --header-h:   80px;
+      --badge-h:    63px;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--dark);
+    }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ===== HEADER ===== */
+    #header {
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      z-index: 1000;
+      padding: 0 6%;
+      height: var(--header-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10, 10, 10, 0.97);
+      box-shadow: 0 2px 24px rgba(0,0,0,0.5);
+    }
+
+    .logo-img {
+      height: 52px;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.82);
+      transition: color .2s;
+    }
+
+    .nav-links a:hover { color: var(--gold-light); }
+
+    .nav-cta {
+      background: linear-gradient(135deg, var(--gold), var(--gold-shine)) !important;
+      color: var(--black) !important;
+      padding: 9px 22px;
+      border-radius: 2px;
+      font-size: 0.75rem !important;
+      box-shadow: 0 4px 14px rgba(196,146,42,0.35);
+    }
+
+    .nav-cta:hover {
+      box-shadow: 0 6px 20px rgba(196,146,42,0.5) !important;
+      color: var(--black) !important;
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 25px; height: 2px;
+      background: #fff;
+      border-radius: 2px;
+      transition: transform .3s, opacity .3s;
+    }
+
+    /* Mobile Nav */
+    #mobileNav {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10,10,10,0.98);
+      z-index: 999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+    }
+
+    #mobileNav.open { display: flex; }
+
+    #mobileNav a {
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      transition: color .2s;
+    }
+
+    #mobileNav a:hover { color: var(--gold-light); }
+
+    #mobileNav .nav-cta-mobile {
+      background: linear-gradient(135deg, var(--gold), var(--gold-shine));
+      color: var(--black) !important;
+      padding: 12px 36px;
+      border-radius: 2px;
+      margin-top: 8px;
+    }
+
+    .close-nav {
+      position: absolute;
+      top: 24px; right: 28px;
+      font-size: 2.2rem;
+      color: rgba(255,255,255,0.7);
+      cursor: pointer;
+      background: none;
+      border: none;
+      line-height: 1;
+    }
+
+    /* ===== IFRAME WRAP ===== */
+    .vitrine-wrap {
+      position: fixed;
+      top: var(--header-h);
+      left: 0;
+      right: 0;
+      bottom: var(--badge-h);
+      width: 100%;
+    }
+
+    .vitrine-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* ===== BADGE ===== */
+    .badge-wrap {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: var(--badge-h);
+      background: var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-top: 1px solid rgba(196,146,42,0.15);
+      z-index: 500;
+    }
+
+    /* ===== RESPONSIVIDADE ===== */
+    @media (max-width: 768px) {
+      :root { --header-h: 68px; }
+      .hamburger { display: flex; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header id="header">
+    <a href="index.html">
+      <img src="images/logo.png" alt="Stilo Bella Modeladores" class="logo-img">
+    </a>
+
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html#sobre">Sobre</a></li>
+        <li><a href="index.html#produtos">Produtos</a></li>
+        <li><a href="index.html#servicos">Serviços</a></li>
+        <li><a href="index.html#planos">Planos</a></li>
+        <li><a href="index.html#depoimentos">Depoimentos</a></li>
+        <li><a href="index.html#localizacao">Localização</a></li>
+        <li><a href="https://wa.me/55XXXXXXXXXXX" target="_blank" rel="noopener noreferrer" class="nav-cta">Fale conosco</a></li>
+      </ul>
+    </nav>
+
+    <button class="hamburger" onclick="openNav()" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- MOBILE NAV -->
+  <nav id="mobileNav" aria-label="Menu mobile">
+    <button class="close-nav" onclick="closeNav()" aria-label="Fechar menu">&times;</button>
+    <a href="index.html#sobre"        onclick="closeNav()">Sobre</a>
+    <a href="index.html#produtos"     onclick="closeNav()">Produtos</a>
+    <a href="index.html#servicos"     onclick="closeNav()">Serviços</a>
+    <a href="index.html#planos"       onclick="closeNav()">Planos</a>
+    <a href="index.html#depoimentos"  onclick="closeNav()">Depoimentos</a>
+    <a href="index.html#localizacao"  onclick="closeNav()">Localização</a>
+    <a href="https://wa.me/55XXXXXXXXXXX" target="_blank" rel="noopener noreferrer" class="nav-cta-mobile" onclick="closeNav()">Fale conosco</a>
+  </nav>
+
+  <!-- ===== VITRINE ===== -->
+  <div class="vitrine-wrap">
+    <iframe
+      src="https://stilobella.egestor.com.br/vitrine/"
+      title="Vitrine Stilo Bella"
+      allowfullscreen
+    ></iframe>
+  </div>
+
+  <!-- ===== BADGE ===== -->
+  <div class="badge-wrap">
+    <div id="montesite-footer-badge"></div>
+    <script src="https://vaabpicspdbolvutnscp.supabase.co/functions/v1/get-footer-iframe"></script>
+  </div>
+
+  <script>
+    function openNav()  { document.getElementById('mobileNav').classList.add('open');    document.body.style.overflow = 'hidden'; }
+    function closeNav() { document.getElementById('mobileNav').classList.remove('open'); document.body.style.overflow = ''; }
+  </script>
+
+</body>
+</html>
