@@ -1029,6 +1029,94 @@
     .d5 { transition-delay: .5s; }
     .d6 { transition-delay: .6s; }
 
+    /* ===== LIGHTBOX ===== */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0,0,0,0.95);
+      align-items: center;
+      justify-content: center;
+    }
+
+    #lightbox.open { display: flex; }
+
+    .lightbox-img-wrap {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #lightbox-img {
+      max-width: 90vw;
+      max-height: 85vh;
+      object-fit: contain;
+      display: block;
+      border: 1px solid rgba(196,146,42,0.2);
+      transition: opacity .3s ease;
+    }
+
+    #lightbox-img.fading { opacity: 0; }
+
+    .lightbox-close {
+      position: fixed;
+      top: 20px; right: 24px;
+      font-size: 2rem;
+      color: rgba(255,255,255,0.75);
+      cursor: pointer;
+      background: none;
+      border: none;
+      line-height: 1;
+      z-index: 2001;
+      transition: color .2s;
+    }
+
+    .lightbox-close:hover { color: var(--gold-light); }
+
+    .lightbox-btn {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2001;
+      width: 52px; height: 52px;
+      border: 1px solid rgba(255,255,255,0.25);
+      background: rgba(0,0,0,0.5);
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 2px;
+      transition: background .2s, border-color .2s;
+    }
+
+    .lightbox-btn:hover {
+      background: rgba(196,146,42,0.5);
+      border-color: var(--gold);
+    }
+
+    .lightbox-btn svg { width: 22px; height: 22px; }
+    .lightbox-prev { left: 20px; }
+    .lightbox-next { right: 20px; }
+
+    .lightbox-counter {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.12em;
+      z-index: 2001;
+    }
+
+    .carrossel-slide { cursor: zoom-in; }
+
     /* ===== GALERIA ===== */
     #galeria {
       padding: 110px 0 0;
@@ -1745,6 +1833,21 @@
     </div>
   </footer>
 
+  <!-- ===== LIGHTBOX ===== -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Visualizar imagem">
+    <button class="lightbox-close" onclick="lightboxClose()" aria-label="Fechar">&times;</button>
+    <div class="lightbox-img-wrap">
+      <img id="lightbox-img" src="" alt="Stilo Bella">
+    </div>
+    <button class="lightbox-btn lightbox-prev" onclick="lightboxGo(-1)" aria-label="Anterior">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="lightbox-btn lightbox-next" onclick="lightboxGo(1)" aria-label="Próximo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <span class="lightbox-counter" id="lightbox-counter"></span>
+  </div>
+
   <!-- ===== WHATSAPP FLUTUANTE ===== -->
   <!-- SUBSTITUIR número pelo WhatsApp real -->
   <a
@@ -1790,12 +1893,62 @@
     }, { rootMargin: '-40% 0px -55% 0px' });
     sections.forEach(s => spyObs.observe(s));
 
+    // ===== LIGHTBOX =====
+    let lbImages = [];
+    let lbCurrent = 0;
+
+    function lightboxOpen(index) {
+      lbCurrent = index;
+      const lb = document.getElementById('lightbox');
+      const img = document.getElementById('lightbox-img');
+      img.src = lbImages[lbCurrent];
+      document.getElementById('lightbox-counter').textContent = (lbCurrent + 1) + ' / ' + lbImages.length;
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function lightboxClose() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function lightboxGo(dir) {
+      const img = document.getElementById('lightbox-img');
+      img.classList.add('fading');
+      setTimeout(() => {
+        lbCurrent = (lbCurrent + dir + lbImages.length) % lbImages.length;
+        img.src = lbImages[lbCurrent];
+        document.getElementById('lightbox-counter').textContent = (lbCurrent + 1) + ' / ' + lbImages.length;
+        img.classList.remove('fading');
+      }, 280);
+    }
+
+    // Fechar ao clicar no fundo
+    document.getElementById('lightbox').addEventListener('click', function(e) {
+      if (e.target === this || e.target === document.querySelector('.lightbox-img-wrap')) lightboxClose();
+    });
+
+    // Teclado: setas e ESC
+    document.addEventListener('keydown', function(e) {
+      if (!document.getElementById('lightbox').classList.contains('open')) return;
+      if (e.key === 'ArrowRight') lightboxGo(1);
+      if (e.key === 'ArrowLeft')  lightboxGo(-1);
+      if (e.key === 'Escape')     lightboxClose();
+    });
+
     // ===== CARROSSEL =====
     (function() {
       const slides = document.querySelectorAll('.carrossel-slide');
       const counter = document.querySelector('.carrossel-counter');
       const total = slides.length;
       let current = 0;
+
+      // Monta array de imagens para o lightbox
+      slides.forEach((slide, i) => {
+        const src = slide.querySelector('img').src;
+        lbImages.push(src);
+        slide.addEventListener('click', () => lightboxOpen(i));
+      });
 
       function goTo(n) {
         slides[current].classList.remove('active');
