@@ -1241,59 +1241,176 @@
 
     /* ===== RESPONSIVIDADE ===== */
 
+    /* --- 4K / Ultra-wide (≥1600px) --- */
+    @media (min-width: 1600px) {
+      .container { max-width: 1400px; }
+      #carrossel { height: 700px; }
+      #inicio h1 { font-size: 5.8rem; }
+    }
+
+    /* --- Desktop intermediário (1024px–1199px) --- */
+    @media (min-width: 1024px) and (max-width: 1199px) {
+      .sobre-grid { gap: 48px; }
+      .planos-inner { gap: 48px; }
+      .footer-grid { gap: 32px; }
+      .servicos-grid { gap: 20px; }
+      .depoimentos-grid { gap: 18px; }
+    }
+
+    /* --- Tablet landscape / 769px–1023px --- */
     @media (max-width: 1023px) {
       #inicio { background-attachment: scroll, scroll; }
       #servicos { background-attachment: scroll, scroll; }
       #carrossel { height: 420px; }
-      .galeria-grid { grid-template-columns: repeat(2, 1fr); }
 
+      .galeria-grid { grid-template-columns: repeat(2, 1fr); }
       .sobre-grid { gap: 48px; }
       .produtos-grid { grid-template-columns: repeat(2, 1fr); }
+      .servicos-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+      .depoimentos-grid { grid-template-columns: repeat(2, 1fr); }
       .planos-inner { grid-template-columns: 1fr; gap: 48px; }
       .localizacao-grid { grid-template-columns: 1fr; gap: 48px; }
       .mapa-wrap { order: -1; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
       .footer-logo { grid-column: 1 / -1; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat-item:nth-child(2) { border-right: none; }
+      .stat-item:nth-child(3) { border-top: 1px solid rgba(255,255,255,0.05); }
     }
 
+    /* --- Mobile (até 768px) --- */
     @media (max-width: 768px) {
       :root { --header-h: 68px; }
-      #carrossel { height: 300px; }
-      .carrossel-btn { width: 36px; height: 36px; }
-      .carrossel-prev { left: 12px; }
-      .carrossel-next { right: 12px; }
 
+      /* Header */
       .hamburger { display: flex; }
       .nav-links { display: none; }
 
-      .sobre-grid { grid-template-columns: 1fr; gap: 40px; }
-      .sobre-img-main { height: 320px; }
+      /* Hero */
+      .hero-inner { padding: 64px 0; }
+
+      /* Carrossel */
+      #carrossel { height: 300px; }
+      .carrossel-btn { width: 36px; height: 36px; }
+      .carrossel-prev { left: 10px; }
+      .carrossel-next { right: 10px; }
+      .carrossel-caption .section-title { font-size: 1.5rem; }
+
+      /* Lightbox */
+      .lightbox-btn { width: 40px; height: 40px; }
+      .lightbox-prev { left: 8px; }
+      .lightbox-next { right: 8px; }
+
+      /* Sobre */
+      .sobre-grid { grid-template-columns: 1fr; gap: 36px; }
+      .sobre-img-main { height: 300px; }
       .sobre-img-frame { display: none; }
       .sobre-mvv { grid-template-columns: 1fr; }
 
-      .produtos-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
-      .servicos-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
-      .depoimentos-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+      /* Produtos */
+      .produtos-grid { grid-template-columns: repeat(2, 1fr); }
+      .produto-card { padding: 28px 20px; }
 
+      /* Serviços */
+      .servicos-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+
+      /* Galeria */
+      .galeria-grid { grid-template-columns: repeat(2, 1fr); }
+
+      /* Depoimentos */
+      .depoimentos-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+
+      /* Planos */
+      .planos-destaque { padding: 36px 24px; }
+
+      /* Footer */
       .footer-grid { grid-template-columns: 1fr; gap: 32px; }
       .footer-logo { grid-column: auto; }
 
+      /* Espaçamentos */
       #sobre, #produtos, #servicos, #planos, #depoimentos, #localizacao { padding: 72px 0; }
+      #galeria { padding: 72px 0 0; }
     }
 
+    /* --- Mobile pequeno (até 480px) --- */
     @media (max-width: 480px) {
+      /* Hero */
       .hero-btns { flex-direction: column; }
-      .btn { justify-content: center; }
+      .btn { justify-content: center; width: 100%; }
+      .hero-inner { padding: 52px 0; }
+
+      /* Stats */
       .stats-grid { grid-template-columns: 1fr 1fr; }
       .stat-item:nth-child(2) { border-right: none; }
       .stat-item:nth-child(3) { border-top: 1px solid rgba(255,255,255,0.05); }
-      .mapa-wrap { height: 300px; }
-      .planos-destaque { padding: 36px 24px; }
+
+      /* Sobre */
+      .sobre-img-main { height: 250px; }
+
+      /* Produtos */
+      .produtos-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+
+      /* Galeria */
+      .galeria-grid { grid-template-columns: 1fr; }
+      .galeria-item { aspect-ratio: 16/9; }
+
+      /* Carrossel */
+      #carrossel { height: 260px; }
+      .carrossel-btn { width: 32px; height: 32px; }
+      .carrossel-caption .section-title { font-size: 1.2rem; }
+      .carrossel-caption .section-tag { display: none; }
+
+      /* Lightbox */
+      .lightbox-btn { width: 34px; height: 34px; }
+      .lightbox-prev { left: 4px; }
+      .lightbox-next { right: 4px; }
+
+      /* Planos */
+      .planos-destaque { padding: 28px 16px; }
+
+      /* Mapa */
+      .mapa-wrap { height: 280px; }
+
+      /* Espaçamentos */
+      #sobre, #produtos, #servicos, #planos, #depoimentos, #localizacao { padding: 60px 0; }
+      #galeria { padding: 60px 0 0; }
     }
 
+    /* --- Mobile muito pequeno (até 360px) --- */
     @media (max-width: 360px) {
       .container { padding: 0 16px; }
       #header { padding: 0 4%; }
+
+      /* Stats em coluna única */
+      .stats-grid { grid-template-columns: 1fr; }
+      .stat-item { border-right: none !important; }
+      .stat-item + .stat-item { border-top: 1px solid rgba(255,255,255,0.05); }
+
+      /* Sobre */
+      .sobre-img-main { height: 210px; }
+      .sobre-mvv { gap: 10px; }
+
+      /* Galeria */
+      .galeria-item { aspect-ratio: 4/3; }
+
+      /* Carrossel */
+      #carrossel { height: 220px; }
+      .carrossel-btn { width: 28px; height: 28px; }
+      .carrossel-prev { left: 4px; }
+      .carrossel-next { right: 4px; }
+
+      /* Lightbox — esconde botões, usa swipe pelo teclado/toque */
+      .lightbox-btn { width: 28px; height: 28px; }
+
+      /* Planos */
+      .planos-destaque { padding: 24px 14px; }
+
+      /* Mapa */
+      .mapa-wrap { height: 240px; }
+
+      /* Espaçamentos */
+      #sobre, #produtos, #servicos, #planos, #depoimentos, #localizacao { padding: 52px 0; }
+      #galeria { padding: 52px 0 0; }
     }
   </style>
 </head>
