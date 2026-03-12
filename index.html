@@ -1246,11 +1246,19 @@
     }
 
     #vitrine-iframe {
-      height: 2600px; /* fallback inicial largo */
+      height: 900px;
+    }
+
+    @media (max-width: 1023px) {
+      #vitrine-iframe { height: 1100px; }
     }
 
     @media (max-width: 768px) {
-      #vitrine-iframe { height: 3200px; }
+      #vitrine-iframe { height: 1400px; }
+    }
+
+    @media (max-width: 480px) {
+      #vitrine-iframe { height: 1800px; }
     }
 
     /* ===== EFEITOS ===== */
